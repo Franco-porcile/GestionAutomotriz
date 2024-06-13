@@ -1,0 +1,54 @@
+package com.gestionAutomotrices.gestionEmpresarial.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.gestionAutomotrices.gestionEmpresarial.entity.Empleado;
+import com.gestionAutomotrices.gestionEmpresarial.repository.EmpleadoRepository;
+
+@Service
+public class EmpleadoService {
+
+	@Autowired
+	private EmpleadoRepository empleadoRepo;
+	
+	@Autowired
+	private VentaService ventaService;
+	
+	@Transactional
+	public void ingresarVentaEmpleado(String nombre,String apellido,String dni,String telefono,int idAuto,int modelo,int marca,int idEmpleado) {
+		Optional<Empleado> optionalEmpleado =empleadoRepo.findById(idEmpleado);
+
+		if(optionalEmpleado.isPresent()) {
+			Empleado empleado = optionalEmpleado.get();
+			if(empleado.getPermiso().getNombre().equals("vendedor")) {
+				ventaService.ingresarVenta(nombre, apellido, dni, telefono, idAuto, modelo, marca, idEmpleado);
+			}
+		}
+	}
+	
+	@Transactional
+	public void aceptarVentaEmpleado(int idTransaccion, int idEmpleado) {
+		Optional<Empleado> optionalEmpleado = empleadoRepo.findById(idEmpleado);
+		if(optionalEmpleado.isPresent()) {
+			Empleado empleado = optionalEmpleado.get();
+			if(empleado.getPermiso().getNombre().equals("finanzas")) {
+				ventaService.aceptarVenta(idTransaccion,idEmpleado);
+			}
+		}
+	}
+	@Transactional
+	public void rechazarVentaEmpleado(int idTransaccion, int idEmpleado) {
+		Optional<Empleado> optionalEmpleado = empleadoRepo.findById(idEmpleado);
+		if(optionalEmpleado.isPresent()) {
+			Empleado empleado = optionalEmpleado.get();
+			if(empleado.getPermiso().getNombre().equals("finanzas")) {
+				ventaService.aceptarVenta(idTransaccion,idEmpleado);
+			}
+		}
+	}
+	
+}

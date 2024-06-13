@@ -1,0 +1,8 @@
+spring.application.name=gestionEmpresarial
+spring.datasource.url=jdbc:sqlserver://localhost:1433;trustServerCertificate=true;databaseName=gestionAutomotriz3
+spring.datasource.username=dboGestionAutomotriz
+spring.datasource.password=prueba
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql = true
+spring.jpa.hibernate.ddl-auto = none
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.SQLServerDialect

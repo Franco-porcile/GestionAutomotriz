@@ -1,0 +1,35 @@
+package com.gestionAutomotrices.gestionEmpresarial.entity;
+
+import java.util.Date;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
+public class Auto {
+	
+	
+	@Column(name="anioFabricacion")
+	@Temporal(TemporalType.DATE)
+	private Date anioFabricacion;
+	
+	@Column(name="estado")
+	private int estado;
+
+	
+	@Column(name="fechaDepositado")
+	@CreationTimestamp
+	private Date fechaDepositado;
+	
+	@ManyToOne
+	@MapsId("idDeposito")
+	@JoinColumn(name="idDeposito",referencedColumnName = "id",insertable=false,updatable=false)
+	private Deposito deposito;
+	
+	
+}

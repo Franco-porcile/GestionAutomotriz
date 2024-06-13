@@ -1,0 +1,5 @@
+package com.gestionAutomotrices.gestionEmpresarial.repository;
+
+public interface EmpleadoRepository {
+
+}

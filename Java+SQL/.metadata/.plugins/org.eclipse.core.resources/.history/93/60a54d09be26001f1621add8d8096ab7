@@ -1,0 +1,23 @@
+package com.gestionAutomotrices.gestionEmpresarial.Entity;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.gestionAutomotrices.gestionEmpresarial.repository.ModeloRepository;
+
+@SpringBootTest
+class ModeloTest {
+
+	@Autowired
+	private ModeloRepository modeloRepo;
+
+	@Test
+	public void test() {
+		
+		fail("Not yet implemented");
+	}
+
+}

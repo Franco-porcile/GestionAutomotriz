@@ -1,0 +1,103 @@
+package com.gestionAutomotrices.gestionEmpresarial.Service;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.gestionAutomotrices.gestionEmpresarial.entity.Venta;
+import com.gestionAutomotrices.gestionEmpresarial.repository.VentaRepository;
+import com.gestionAutomotrices.gestionEmpresarial.service.VentaService;
+
+@SpringBootTest
+class VentaServiceTest {
+
+    @Autowired
+    private VentaService ventaService;
+
+    @Autowired
+    private VentaRepository ventaRepo;
+
+    @BeforeEach
+    @Transactional
+    @Rollback
+    void setup() {
+        String nombre = "Prueba";
+        String apellido = "DesdeJava2";
+        String dni = "85236972";
+        String telefono = "85236971";
+        int idAuto = 9;
+        int modelo = 9;
+        int marca = 3;
+        int idEmpleado = 3;
+        ventaService.ingresarVenta(nombre, apellido, dni, telefono, idAuto, modelo, marca, idEmpleado);
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void ingresarVentaTest() {
+        String dni = "85236972";
+        Venta ventaActual = ventaRepo.findAll()
+                .stream()
+                .filter(cVenta -> cVenta.getCliente().getDni().equals(dni))
+                .findFirst()
+                .orElse(null);
+
+        assertEquals(dni, ventaActual.getCliente().getDni());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void aceptarVentaTest() {
+        String dni = "85236972";
+        Venta ventaActual = null;
+        for (Venta cVenta : ventaRepo.findAll()) {
+            if (cVenta.getCliente().getDni().equals(dni)) {
+                ventaActual = cVenta;
+                break;
+            }
+        }
+        int idTransaccion = ventaActual.getNroTransaccion();
+        int idEmpleadoFinanzas = 4;
+        ventaService.aceptarVenta(idTransaccion, idEmpleadoFinanzas);
+
+        Venta ventaActualizada=null;
+        for (Venta cVenta : ventaRepo.findAll()) {
+            if (cVenta.getCliente().getDni().equals(dni)) {
+                ventaActualizada = cVenta;
+                break;
+            }
+        }
+
+        assertEquals(idEmpleadoFinanzas, ventaActualizada.getEmpleadoFinanzas().getId());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void rechazarVentaTest() {
+        String dni = "85236972";
+        Venta ventaActual = null;
+        for (Venta cVenta : ventaRepo.findAll()) {
+            if (cVenta.getCliente().getDni().equals(dni)) {
+                ventaActual = cVenta;
+                break;
+            }
+        }
+        assertNotNull(ventaActual, "La venta no se encontró");
+        int idTransaccion = ventaActual.getNroTransaccion();
+        int idEmpleado = 4;
+        ventaService.rechazarVenta(idTransaccion, idEmpleado);
+
+        Venta ventaActualizada = ventaRepo.findById(idTransaccion).orElse(null);
+
+        assertEquals(idEmpleado, ventaActualizada.getEmpleadoFinanzas().getId());
+    }
+}
+

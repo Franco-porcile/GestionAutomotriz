@@ -1,0 +1,32 @@
+package com.gestionAutomotrices.gestionEmpresarial.Entity;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.gestionAutomotrices.gestionEmpresarial.entity.Marca;
+import com.gestionAutomotrices.gestionEmpresarial.entity.Modelo;
+import com.gestionAutomotrices.gestionEmpresarial.entity.ModeloId;
+import com.gestionAutomotrices.gestionEmpresarial.repository.ModeloRepository;
+
+@SpringBootTest
+class ModeloTest {
+
+	@Autowired
+	private ModeloRepository modeloRepo;
+
+	@Test
+	public void test() {
+	       ModeloId idExistente;
+	       idExistente.setId(1);
+	       idExistente.setMarcaId(1);
+		    
+	        Modelo foundMarca = modeloRepo.findById(idExistente).orElse(null);
+
+	        System.out.println(foundMarca.getId()+foundMarca.getNombre());
+		fail("Not yet implemented");
+	}
+
+}

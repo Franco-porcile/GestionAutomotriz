@@ -1,0 +1,93 @@
+package com.gestionAutomotrices.gestionEmpresarial.Service;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.gestionAutomotrices.gestionEmpresarial.entity.Empleado;
+import com.gestionAutomotrices.gestionEmpresarial.entity.Venta;
+import com.gestionAutomotrices.gestionEmpresarial.repository.VentaRepository;
+import com.gestionAutomotrices.gestionEmpresarial.service.EmpleadoService;
+
+
+@SpringBootTest
+class EmpleadoServiceTest {
+
+	@Autowired
+	private EmpleadoService empleadoService;
+	
+	@Autowired
+	private VentaRepository ventaRepo;
+	
+	@Test
+	@Transactional
+	@Rollback
+	void ingresarVentaEmpleadoTest() {
+		String nombre="Prueba";
+		String apellido="DesdeJava2";
+		String dni="85236972";
+		String telefono="85236971";
+		int idAuto=3;
+		int modelo=3;
+		int marca=1;
+		int idEmpleado=3;
+		empleadoService.ingresarVentaEmpleado(nombre, apellido, dni, telefono, idAuto, modelo, marca, idEmpleado);
+		
+		Venta ventaActual = null;
+		for(Venta cVenta : ventaRepo.findAll()){
+			if(cVenta.getCliente().getDni().equals(dni) && cVenta.getEstado().getNombre().equals("pendiente")) {
+				ventaActual = cVenta;
+			}
+		}
+		System.out.println(ventaActual.getCliente().getDni());
+		assertEquals(dni,ventaActual.getCliente().getDni());
+	}
+
+	@Test
+	@Transactional
+	@Rollback
+	void aceptarVentaEmpleadoTest() {
+		int idTransaccion;
+		int idEmpleado;
+	}
+
+	@Test
+	@Transactional
+	@Rollback
+	void rechazarVentaEmpleadoTest() {
+		int idTransaccion;
+		int idEmpleado;
+	}
+		
+	@Test
+	@Transactional
+	@Rollback
+	void pedirCambioDepositoTest() {
+		int idPedido;
+		int idAuto;
+		int idDeposito;
+	}
+		
+	@Test
+	@Transactional
+	@Rollback
+	void aceptarCambioDepositoTest() {
+		int idEmpleado;
+		int idAuto;
+	}
+
+	@Test
+	@Transactional
+	@Rollback
+	void recibirCambioDepositoTest() {
+		int idEmpleado;
+		int idAuto;
+	}
+
+}

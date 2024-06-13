@@ -1,0 +1,6 @@
+java.lang.NullPointerException: Cannot invoke "com.gestionAutomotrices.gestionEmpresarial.entity.Empleado.getId()" because the return value of "com.gestionAutomotrices.gestionEmpresarial.entity.Venta.getEmpleadoFinanzas()" is null
+	at com.gestionAutomotrices.gestionEmpresarial.Service.EmpleadoServiceTest.rechazarVentaEmpleadoTest(EmpleadoServiceTest.java:84)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+

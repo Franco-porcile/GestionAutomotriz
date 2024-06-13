@@ -1,0 +1,5 @@
+package com.gestionAutomotrices.gestionEmpresarial.service;
+
+public class EmpleadoService {
+
+}
